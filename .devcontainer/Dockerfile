@@ -2,7 +2,11 @@
 FROM mcr.microsoft.com/azure-powershell:ubuntu-22.04
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y curl fontconfig git unzip
+RUN apt-get update && apt-get install -y \
+  curl \
+  git \
+  wget \
+  unzip
 
 # Install a Nerd Font (Fira Code as an example)
 ENV FONT_NAME=CascadiaMono
