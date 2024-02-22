@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
   fontconfig \
   git \
   gnupg2 \
+  python3-pip \
   wget \
   unzip
 
