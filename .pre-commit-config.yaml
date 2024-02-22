@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: no-commit-to-branch
+      - id: trailing-whitespace
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.87.1
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_validate
+      - id: terraform_docs
+        args:
+          - --args=--config=.config/.terraform-docs.yaml
+      - id: terraform_tflint
+        args:
+          - --args=--config=__GIT_WORKING_DIR__/.config/.tflint.hcl
+      - id: terraform_checkov
+        args:
+          - --args=--config=__GIT_WORKING_DIR__/.config/.checkov.yaml
