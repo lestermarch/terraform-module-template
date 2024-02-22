@@ -27,8 +27,10 @@ RUN mkdir -p /root/.poshthemes && \
     curl -o /root/.poshthemes/zash.omp.json https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/zash.omp.json
 
 # Set the Oh My Posh theme in the PowerShell profile
-RUN echo '$env:POSH_THEMES_PATH = "/root/.poshthemes"' >> /root/.config/powershell/Microsoft.PowerShell_profile.ps1 && \
-    echo 'oh-my-posh init pwsh --config $env:POSH_THEMES_PATH/zash.omp.json | Invoke-Expression' >> /root/.config/powershell/Microsoft.PowerShell_profile.ps1
+ENV POSH_THEMES_PATH="$env:HOME/.poshthemes"
+RUN mkdir $POSH_THEMES_PATH \
+  && echo '$env:POSH_THEMES_PATH = "$env:HOME/.poshthemes"' >> $PROFILE \
+  && echo 'oh-my-posh init pwsh --config $env:POSH_THEMES_PATH/zash.omp.json | Invoke-Expression' >> $PROFILE
 
 # Install Terraform
 ENV TERRAFORM_VERSION=1.7.4
