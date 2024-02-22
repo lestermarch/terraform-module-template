@@ -20,8 +20,8 @@ RUN wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/release
   && fc-cache -fv
 
 # Install Oh My Posh
-RUN wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh && \
-    chmod +x /usr/local/bin/oh-my-posh
+RUN wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh \
+    && chmod +x /usr/local/bin/oh-my-posh
 
 # Get the default Oh My Posh theme
 RUN mkdir -p /root/.poshthemes && \
@@ -36,9 +36,11 @@ COPY Microsoft.PowerShell_profile.ps1 /home/${USERNAME}/.config/powershell/Micro
 
 # Install Terraform
 ENV TERRAFORM_VERSION=1.7.4
-RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
-    && apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
-    && apt-get update && apt-get install terraform=${TERRAFORM_VERSION}
+RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -O /usr/local/bin/ \
+    && unzip /usr/local/bin/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+    && chmod +x /usr/local/bin/terraform \
+    && rm /usr/local/bin/terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
+    && terraform --version
 
 # Install TFLint
 ENV TFLINT_VERSION=0.50.3
