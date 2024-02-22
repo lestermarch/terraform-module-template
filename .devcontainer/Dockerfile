@@ -4,6 +4,7 @@ FROM mcr.microsoft.com/azure-powershell:ubuntu-22.04
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
   curl \
+  fontconfig \
   git \
   wget \
   unzip
