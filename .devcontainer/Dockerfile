@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
   curl \
   fontconfig \
   git \
+  gnupg2 \
   wget \
   unzip
 
