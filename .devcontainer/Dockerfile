@@ -36,10 +36,10 @@ COPY Microsoft.PowerShell_profile.ps1 /home/${USERNAME}/.config/powershell/Micro
 
 # Install Terraform
 ENV TERRAFORM_VERSION=1.7.4
-RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -O /usr/local/bin/terraform.zip \
-    && unzip /usr/local/bin/terraform.zip \
+RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -O terraform.zip \
+    && unzip terraform.zip -d /usr/local/bin \
     && chmod +x /usr/local/bin/terraform \
-    && rm /usr/local/bin/terraform.zip \
+    && rm terraform.zip \
     && terraform --version
 
 # Install TFLint
