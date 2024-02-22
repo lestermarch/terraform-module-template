@@ -1,0 +1,28 @@
+{
+  "name": "Terraform",
+  "build": {
+      "dockerfile": "Dockerfile",
+      "context": "."
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "pkief.material-icon-theme",
+        "github.github-vscode-theme",
+        "hashicorp.terraform",
+        "hashicorp.hcl",
+        "streetsidesoftware.code-spell-checker",
+        "cschleiden.vscode-github-actions",
+        "davidanson.vscode-markdownlint"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/usr/bin/pwsh",
+        "terminal.integrated.fontFamily": "'Fira Code', 'monospace'",
+        "workbench.iconTheme": "material-icon-theme",
+        "workbench.colorTheme": "GitHub Dark"
+      }
+    }
+  },
+  "postCreateCommand": "pre-commit install",
+  "features": {}
+}
