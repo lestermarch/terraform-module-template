@@ -1,0 +1,6 @@
+branch: main
+directory: .
+download-external-modules: false
+evaluate-variables: true
+framework: terraform
+quiet: true
