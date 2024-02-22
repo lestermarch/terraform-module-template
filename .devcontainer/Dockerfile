@@ -5,10 +5,13 @@ FROM mcr.microsoft.com/azure-powershell:ubuntu-22.04
 RUN apt-get update && apt-get install -y curl fontconfig git unzip
 
 # Install a Nerd Font (Fira Code as an example)
-RUN mkdir -p /usr/share/fonts/truetype/firacode && \
-    curl -fLo "/usr/share/fonts/truetype/firacode/Fira Code Regular Nerd Font Complete.otf" \
-    "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.otf" && \
-    fc-cache -fv
+ENV FONT_NAME=CascadiaMono
+ENV FONT_VERSION=3.1.1
+RUN wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v${FONT_VERSION}/${FONT_NAME}.zip \
+  && cd ~/.local/share/fonts \
+  && unzip ${FONT_NAME}.zip \
+  && rm ${FONT_NAME}.zip \
+  && fc-cache -fv
 
 # Install Oh My Bash
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
