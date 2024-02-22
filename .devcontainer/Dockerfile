@@ -18,9 +18,6 @@ RUN wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/release
   && rm ${FONT_NAME}.zip \
   && fc-cache -fv
 
-# Install Oh My Bash
-RUN sh -c "$(curl -fsSL https://raw.github.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-
 # Install Oh My Posh
 RUN wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh && \
     chmod +x /usr/local/bin/oh-my-posh
