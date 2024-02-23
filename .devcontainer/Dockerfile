@@ -1,6 +1,9 @@
 # Use a base image with Azure Powershell
 FROM mcr.microsoft.com/azure-powershell:ubuntu-22.04
 
+# Silence some warnings and set the non-interactive mode for apt-get
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
   curl \
@@ -12,28 +15,16 @@ RUN apt-get update && apt-get install -y \
   unzip
 
 # Install a Nerd Font (Fira Code as an example)
-ENV FONT_NAME=CascadiaMono
-ENV FONT_VERSION=3.1.1
-RUN wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v${FONT_VERSION}/${FONT_NAME}.zip \
-  && cd ~/.local/share/fonts \
-  && unzip ${FONT_NAME}.zip \
+ENV FONT_NAME=CascadiaCode
+ENV FONT_VERSION=2111.01
+RUN wget https://github.com/microsoft/cascadia-code/releases/download/v${FONT_VERSION}/${FONT_NAME}-${FONT_VERSION}.zip -O ${FONT_NAME}.zip \
+  && unzip ${FONT_NAME}.zip -d /usr/share/fonts \
   && rm ${FONT_NAME}.zip \
-  && fc-cache -fv
+  && fc-cache -f -v
 
-# Install Oh My Posh
-RUN wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh \
-    && chmod +x /usr/local/bin/oh-my-posh
-
-# Get the default Oh My Posh theme
-RUN mkdir -p /root/.poshthemes && \
-    curl -o /root/.poshthemes/zash.omp.json https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/zash.omp.json
-
-# Set the Oh My Posh theme in the PowerShell profile
-ENV POSH_THEME_PATH="/root/.poshthemes"
-ENV POSH_THEME="zash"
-RUN mkdir -p ${POSH_THEME_PATH} \
-    && curl -o ${POSH_THEME_PATH}/${POSH_THEME}.omp.json https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/${POSH_THEME}.omp.json
-COPY Microsoft.PowerShell_profile.ps1 /home/${USERNAME}/.config/powershell/Microsoft.PowerShell_profile.ps1
+# Install Oh-My-Bash
+RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended \
+    && sed -i 's/OSH_THEME="font"/OSH_THEME="rr"/g' ~/.bashrc
 
 # Install Terraform
 ENV TERRAFORM_VERSION=1.7.4
@@ -62,5 +53,16 @@ RUN pip install pre-commit
 # Install Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
+# Install GitHub CLI
+ARG GITHUB_CLI_VERSION="2.44.1"
+RUN wget https://github.com/cli/cli/releases/download/v${GITHUB_CLI_VERSION}/gh_${GITHUB_CLI_VERSION}_linux_amd64.tar.gz && \
+    tar xvf gh_${GITHUB_CLI_VERSION}_linux_amd64.tar.gz && \
+    cp gh_${GITHUB_CLI_VERSION}_linux_amd64/bin/gh /usr/local/bin/ && \
+    rm -rf gh_${GITHUB_CLI_VERSION}_linux_amd64.tar.gz
+
 # Install PowerShell Az module
-RUN pwsh -Command "Install-Module -Name Az -AllowClobber -Scope AllUsers -Force"
+RUN pwsh -Command "Install-Module -Name Az -AllowClobber -Scope AllUsers -Verbose -Force"
+
+# Set working directory to /workspace as default
+WORKDIR /workspace
+CMD ["/bin/bash"]
