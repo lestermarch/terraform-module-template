@@ -8,7 +8,6 @@
     "vscode": {
       "extensions": [
         "pkief.material-icon-theme",
-        "github.github-vscode-theme",
         "hashicorp.terraform",
         "hashicorp.hcl",
         "streetsidesoftware.code-spell-checker",
@@ -16,10 +15,14 @@
         "davidanson.vscode-markdownlint"
       ],
       "settings": {
-        "terminal.integrated.shell.linux": "/usr/bin/pwsh",
-        "terminal.integrated.fontFamily": "'CascadiaMono', 'monospace'",
-        "workbench.iconTheme": "material-icon-theme",
-        "workbench.colorTheme": "GitHub Dark"
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash"
+          }
+        },
+        "workbench.iconTheme": "material-icon-theme"
       }
     }
   },
