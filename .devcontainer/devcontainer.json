@@ -15,8 +15,9 @@
         "davidanson.vscode-markdownlint"
       ],
       "settings": {
+        "editor.tabSize": 2,
         "terminal.integrated.defaultProfile.linux": "bash",
-        "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font",
+        "terminal.integrated.fontFamily": "CascadiaCode",
         "terminal.integrated.profiles.linux": {
           "bash": {
             "path": "/bin/bash"

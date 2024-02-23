@@ -15,13 +15,12 @@ RUN apt-get update && apt-get install -y \
   unzip
 
 # Install a Nerd Font (Fira Code as an example)
-ENV FONT_NAME=CascadiaMono
-ENV FONT_VERSION=3.1.1
-RUN wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v${FONT_VERSION}/${FONT_NAME}.zip \
-  && cd ~/.local/share/fonts \
-  && unzip ${FONT_NAME}.zip \
+ENV FONT_NAME=CascadiaCode
+ENV FONT_VERSION=2111.01
+RUN wget https://github.com/microsoft/cascadia-code/releases/download/v${FONT_VERSION}/${FONT_NAME}-${FONT_VERSION}.zip -O ${FONT_NAME}.zip \
+  && unzip ${FONT_NAME}.zip -d /usr/share/fonts \
   && rm ${FONT_NAME}.zip \
-  && fc-cache -fv
+  && fc-cache -f -v
 
 # Install Oh-My-Bash
 RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended \
