@@ -17,7 +17,7 @@
       ],
       "settings": {
         "terminal.integrated.shell.linux": "/usr/bin/pwsh",
-        "terminal.integrated.fontFamily": "'Fira Code', 'monospace'",
+        "terminal.integrated.fontFamily": "'CascadiaMono', 'monospace'",
         "workbench.iconTheme": "material-icon-theme",
         "workbench.colorTheme": "GitHub Dark"
       }
